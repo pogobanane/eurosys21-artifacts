@@ -34,11 +34,25 @@ touch $LOG
 
 for j in {1..5}
 do
-	taskset -c ${CPU1} qemu-guest \
-		-i data/nginx.cpio \
-		-k ${IMAGES}/unikraft+mimalloc.kernel \
-		-a "" -m 1024 -p ${CPU2} \
-		-b ${NETIF} -x
+  # we could do additional qemu flags to pin cpus
+  taskset -c ${CPU1} qemu-system-x86_64 \
+    -initrd data/nginx.cpio \
+    -kernel ${IMAGES}/unikraft+mimalloc.kernel \
+    -append "console=ttyS0" \
+    -m 1024 \
+    -cpu host \
+    -enable-kvm \
+    -netdev bridge,id=en0,br=unikraft0 \
+    -device virtio-net-pci,netdev=en0 \
+    -nographic                                             
+  # netdev missing lol. Looks good otherwise
+
+
+	# taskset -c ${CPU1} qemu-guest \
+	# 	-i data/nginx.cpio \
+	# 	-k ${IMAGES}/unikraft+mimalloc.kernel \
+	# 	-a "" -m 1024 -p ${CPU2} \
+	# 	-b ${NETIF} -x
 
 	# make sure that the server has properly started
 	sleep 5
