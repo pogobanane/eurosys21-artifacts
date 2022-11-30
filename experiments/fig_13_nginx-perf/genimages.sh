@@ -74,6 +74,8 @@ cp ./data/nginx.conf /mnt/nginx-tmp/etc/nginx/nginx.conf
 umount /mnt/nginx-tmp
 rm -rf /mnt/nginx-tmp
 
+exit 0 # we dont need the following images
+
 # ========================================================================
 # Generate OSv VM image
 # ========================================================================
