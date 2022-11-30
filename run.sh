@@ -186,7 +186,7 @@ if [[ $LIST_ALL == 'y' ]]; then
 
 elif [[ $NO_DEPS != 'y' && $ACTION != "clean" ]]; then
   log_inf "Installing dependencies"
-  install_dependencies
+  #install_dependencies
 fi
 
 # Install Unikraft tracepoints scripts

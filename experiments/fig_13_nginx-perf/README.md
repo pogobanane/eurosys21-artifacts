@@ -32,3 +32,21 @@ using 14 threads, 30 connections, and a static 612B HTML page.
  * `./benchmark.sh` runs the experiment and takes about 40-45 minutes on
    average; and,
  * `./plot.py` is used to generate the figure.
+
+
+## What actually happens
+
+What to actually do to run parts of this on NixOS:
+
+```bash
+DOCKER_FORCE_BUILD=n ./run.sh fig_13 prepare
+./run.sh fig_13 run
+```
+
+- `genimages.sh` calls  `unikraft_eurosys21_build nginx mimalloc $IMAGES` to generate the boot kernel for qemu (defined in `experiments/common/build.sh`.
+- it just copies the binaries out of some docker container
+- the container is `hlefeuvre/unikraft-eurosys21:latest` and seems to originate from `eurosys21-artifacts/support/unikraft-eurosys21.dockerfile`
+- that dockerfile checks out `https://github.com/unikraft/lib-nginx.git` at `d89c9a45d6a19eb71815492acb14b675e2da894a`
+
+
+
